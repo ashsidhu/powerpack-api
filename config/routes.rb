@@ -1,9 +1,29 @@
 Rails.application.routes.draw do
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+  get 'status/show'
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  get '/status' => 'status#show'
+
+  scope '/api' do
+    scope '/v1' do
+      scope '/packages' do
+        get '/' => 'api_packages#index'
+        post '/' => 'api_packages#create'
+        scope '/:id' do
+          get '/' => 'api_packages#show'
+          put '/' => 'api_packages#update'
+        end
+      end
+
+      scope '/users' do 
+        get '/' => 'api_users#index'
+        post '/' => 'api_users#create'
+        scope '/:id' do
+          get '/' => 'api_users#show'
+          put '/' => 'api_users#update'
+        end
+      end
+    end
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
